@@ -1,6 +1,7 @@
 
 
 
+
 # Tugas Kecerdasan Buatan-F
 _Dohan Pranata Wikanda 05111840000139_
 
@@ -326,3 +327,20 @@ Initial State -> Right -> Up -> Right -> Down -> Down -> Left -> Up -> Right -> 
   4. `Queens()` :  Fungsi digunakan sebagai prosedur utama dari algoritma Hill Climbing, yaitu menghitung konflik antar Ratu, dan jika konflik tersebut sama dengan nol, maka posisi/status Ratu tersebut sukses. Fungsi ini juga digunakan untuk menghitung _moving cost_ dari algoritma Hill Climbing, langkah yang akan diambil, dan waktu random start. Fungsi ini akan direkursif hingga dalam posisi/status sekarang sama dengan nol. _Return value_ dari fungsi ini adalah posisi/status sekarang.
 
 -----
+## MinMax TicTacToe
+source code : [TicTacToe](https://github.com/ohmyjons/Tugas-KB/tree/master/MInMax_TicTacToe)
+
+Minimax merupakan algoritma _backtracking_ untuk memtukan sebuah keputusan terbaik untuk seorang _player_, dengan asumsi bahwa lawan main juga bermain dengan terbaik. Biasanya Minimax digunakan pada game yang pemainnya ada 2, seperti Tic Tac Toe. 
+
+Dalam Minimax, ada dua  _player_  yang terdiri dari:
+
+1.  Maximizer, yaitu yang mencoba mendapatkan skor tertinggi sebisa mungkin
+2.  Minimizer, yaitu yang mencoba mendapatkan skor terendah sebisa mungkin
+>untuk Algoritma ini saya mengadaptasi dari [SINI](https://github.com/akiratwang/TicTacToe-AI-agent)
+
+untuk fungsi minimax nya adalah sebagai berkut :
+```
+
+```
+
+---
