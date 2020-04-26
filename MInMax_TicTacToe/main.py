@@ -3,7 +3,7 @@ Minimax implementation for Tic Tac Toe
 Author: Akira Wang
 """
 # Import Dependencies
-from algorithms import *
+from minmax import *
 
 def main():
     """
