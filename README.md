@@ -2,6 +2,7 @@
 
 
 
+
 # Tugas Kecerdasan Buatan-F
 _Dohan Pranata Wikanda 05111840000139_
 
@@ -327,7 +328,7 @@ Initial State -> Right -> Up -> Right -> Down -> Down -> Left -> Up -> Right -> 
   4. `Queens()` :  Fungsi digunakan sebagai prosedur utama dari algoritma Hill Climbing, yaitu menghitung konflik antar Ratu, dan jika konflik tersebut sama dengan nol, maka posisi/status Ratu tersebut sukses. Fungsi ini juga digunakan untuk menghitung _moving cost_ dari algoritma Hill Climbing, langkah yang akan diambil, dan waktu random start. Fungsi ini akan direkursif hingga dalam posisi/status sekarang sama dengan nol. _Return value_ dari fungsi ini adalah posisi/status sekarang.
 
 -----
-## MinMax TicTacToe
+## Minimax TicTacToe
 source code : [TicTacToe](https://github.com/ohmyjons/Tugas-KB/tree/master/MInMax_TicTacToe)
 
 Minimax merupakan algoritma _backtracking_ untuk memtukan sebuah keputusan terbaik untuk seorang _player_, dengan asumsi bahwa lawan main juga bermain dengan terbaik. Biasanya Minimax digunakan pada game yang pemainnya ada 2, seperti Tic Tac Toe. 
@@ -340,7 +341,77 @@ Dalam Minimax, ada dua  _player_  yang terdiri dari:
 
 untuk fungsi minimax nya adalah sebagai berkut :
 ```
+def minimax(state, depth, player):
+    """
+    Minimax implementation.
+    Returns: Max or Min for (row, col, score)
+    """
+    if player == AGENT:
+        maximise = [-1, -1, -inf]
+    else:
+        maximise = [-1, -1, +inf]
+
+    if depth == 0 or game_over(state):
+        score = eval(state)
+        return [-1, -1, score]
+
+    for tile in blank_tiles(state):
+        i, j = tile[0], tile[1]
+        state[i][j] = player
+        score = minimax(state, depth - 1, -player)
+        state[i][j] = 0
+        score[0], score[1] = i, j
+
+        if player == AGENT:
+            """
+            Max Value
+            """
+            if score[2] > maximise[2]:
+                maximise = score
+        else:
+            """
+            Min Value
+            """
+            if score[2] < maximise[2]:
+                maximise = score
+
+    return maximise
+```
+Berikut ini pseudo code dari algorima Minimax:
+
+```
+function minimax(node, depth, maximizingPlayer) is
+  if depth = 0 or node is a terminal node then
+      return the heuristic value of node
+  if maximizingPlayer then
+      value := −∞ 
+      for each child of node do
+          value := max(value, minimax(child, depth − 1, FALSE))
+      return value
+  else (* minimizing player *)
+      value := +∞
+      for each child of node do
+          value := min(value, minimax(child, depth − 1, TRUE))
+      return value
 
 ```
 
+Berikut ini penjelasan fungsi-fungsi pada file  `algorithms.py`:
+
+1.  `eval()`: Fungsi ini digunakan sebagai  _flag_  apabila  _Agent_  atau  _Human_  yang menang atau tidak keduanya.
+2.  `winner()`: Fungsi ini menyediakan  _state_  menang. Selain itu, fungsi ini juga digunakan untuk memeriksa apakah player menang game.
+3.  `game_over()`: Fungsi  `game_over()`  digunakan untuk memeriksa siapakah yang menang (_Agent_  atau  _Human_) dengan memanggil fungsi  `winener()`  dengan  _state_  sekarang.
+4.  `blank_tiles()`: Dalam permainan Tictactoe, pasti terdapat kotak yang kosong. Oleh karena itu, fungsi ini digunakan untuk memeriksa apa saja kotak yang kosong. Kemudian, dilakukan  _return_  list kotak yang kosong tadi.
+5.  `valid_action()`: Fungsi ini digunakan untuk mencegah terjadinya input dobel pada satu kotak, dan memberikan  _flag_  apabila kotak yang dituju dapat diisi 'X' atau 'O'.
+6.  `apply_action()`: Hasil  _flag_  dari fungsi  `valid_action()`  digunakan untuk mengisi 'X' atau 'O' pada kotak.
+7.  `minimax()`: Implementasi dari pseudo code Minimax diatas diterapkan dalam fungsi ini.
+8.  `print_board()`: Fungsi ini berfungsi untuk melakukan  _print_  kondisi board sekarang.
+9.  `agent()`:  _Agent_  adalah lawan main dari  _Human_. Fungsi ini berisi perintah untuk memeriksa apakah game telah selesai (hal ini terjadi apabila  _depth_  == 0 atau  _flag_  bernilai  _true_  setelah menjalankan fungsi  `game_over()`),  _print_  kondisi board sekarang, input langkah berikutnya dari  _Agent_, dan untuk mengisi 'X' atau 'O' dengan memanggil  `apply_action()`  dengan argumen dari hasil pemanggilan fungsi  `minimax()`.
+10.  `human()`: Fungsi ini mirip dengan  `agent()`, hanya saja berbeda di penggunaan  `apply_action()`-nya. Setelah user memasukkan nomor kotak, nomor tersebut akan diperiksa dengan mencocokkan dengan  _global variable_  ACTIONS untuk kemudian menghasilkan koordinat pada board.
+
+Pada file  `main.py`, pada saat awal game berjalan, user diminta mau bermain sebagai 'X' atau 'O'. Apabila user memilih 'X', maka user bermain pertama, begitu pula sebaliknya. Kemudian, user akan diminta untuk memasukkan posisi  _gaco-an_-nya ke dalam board dengan urutan sebagai berikut:
+
+![enter image description here](https://github.com/akiratwang/TicTacToe-AI-agent/blob/master/board.PNG?raw=true)
+
 ---
+
